@@ -1,47 +1,427 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>tài xỉu online</title>
-        <link rel="stylesheet" href="style.css">
-        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    </head>
-    <body>
-        <div class="card">
-            <div class="card_heart">
-                <i class='bx bxl-steam'></i>
-            </div>
-            <div class="card_cart">
-                <i class='bx bxl-chrome'></i>
-            </div>
-            <div class="card_img">
-                <img src="nica.png">
-            </div>
-            <div class="card_title">
-                SUPA NICA
-            </div>
-            <div class="card_price">
-                -10000vnd
-            </div>
-            <div class="card_size">
-                <h3>DICK:</h3>
-                <span>6</span>
-                <span>7</span>
-                <span>8</span>
-                <span>9</span>
-            </div>
-            <div class="card_color">
-                <h3>Color</h3>
-                <span class="card_color_green"></span>
-                <span class="card_color_red"></span>
-                <span class="card_color_black"></span>
-            </div>
-            <div class="card_action">
-                <button>chich ngay</button>
-                <button>hen ngay</button>
-            </div>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Đếm ngược ngày thi THPT Quốc gia</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      overflow: hidden;
+      user-select: none;
+      perspective: 1000px;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 12px 20px 20px 20px;
+      border-radius: 12px;
+      box-shadow: 
+        0 8px 32px rgba(0,0,0,0.3),
+        0 1px 1px rgba(255,255,255,0.3) inset,
+        0 -1px 1px rgba(0,0,0,0.1) inset;
+      text-align: center;
+      max-width: 800px;
+      width: 95vw;
+      backdrop-filter: blur(10px);
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1),
+        rgba(255, 255, 255, 0.05)
+      );
+      transform-style: preserve-3d;
+      animation: container-float 6s ease-in-out infinite;
+    }
+
+    @keyframes container-float {
+      0%, 100% { transform: translateZ(0) rotateX(0) rotateY(0); }
+      25% { transform: translateZ(20px) rotateX(2deg) rotateY(-2deg); }
+      75% { transform: translateZ(20px) rotateX(-2deg) rotateY(2deg); }
+    }
+
+    .window-controls {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .window-button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .window-button:hover {
+      transform: scale(1.1);
+    }
+
+    .window-button::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 50%;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.1) inset;
+    }
+
+    .close {
+      background: linear-gradient(to bottom, #ff5f57, #ff4b45);
+      border: 1px solid #e0443e;
+    }
+
+    .minimize {
+      background: linear-gradient(to bottom, #ffbd2e, #ffb224);
+      border: 1px solid #dea123;
+    }
+
+    .maximize {
+      background: linear-gradient(to bottom, #27c93f, #23aa35);
+      border: 1px solid #1aab29;
+    }
+
+    .window-title {
+      position: absolute;
+      top: 12px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      pointer-events: none;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    }
+
+    .content-area {
+      margin-top: 35px;
+      transform-style: preserve-3d;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+      text-shadow: 
+        0 2px 8px rgba(0,0,0,0.3),
+        0 4px 12px rgba(0,0,0,0.1);
+      transform: translateZ(30px);
+      transition: all 0.3s ease;
+    }
+
+    h1:hover {
+      transform: translateZ(40px);
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: nowrap;
+      transform-style: preserve-3d;
+    }
+
+    .time-box {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 20px 15px;
+      width: 110px;
+      box-shadow: 
+        0 4px 15px rgba(0,0,0,0.2),
+        0 1px 1px rgba(255,255,255,0.2) inset;
+      cursor: default;
+      transition: all 0.3s ease;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transform: translateZ(0);
+      position: relative;
+    }
+
+    .time-box:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateZ(20px);
+      box-shadow: 
+        0 8px 25px rgba(0,0,0,0.3),
+        0 1px 1px rgba(255,255,255,0.2) inset;
+    }
+
+    .number {
+      font-size: 4rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-shadow: 
+        0 2px 6px rgba(0,0,0,0.5),
+        0 6px 12px rgba(0,0,0,0.1);
+      line-height: 1;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transform-style: preserve-3d;
+    }
+
+    .label {
+      margin-top: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #e0e0e0;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      user-select: none;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      position: relative;
+      transform: translateZ(10px);
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .countdown {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      
+      .time-box {
+        width: calc(50% - 10px);
+        margin-bottom: 10px;
+        padding: 15px 10px;
+      }
+      
+      .number {
+        font-size: 2.5rem;
+      }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .container {
+        padding: 12px;
+      }
+    }
+
+    .author {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1rem;
+      z-index: 100;
+      text-align: center;
+      font-weight: 500;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      padding: 8px 15px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .author:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateX(-50%) translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .author a {
+      color: #fff;
+      text-decoration: none;
+      background: linear-gradient(
+        to right,
+        #ff6b6b,
+        #4ecdc4
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shine 3s linear infinite;
+      font-weight: 600;
+    }
+
+    @keyframes shine {
+      to {
+        background-position: 200% center;
+      }
+    }
+
+    .author a:hover {
+      animation: shine 1.5s linear infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" role="main" aria-label="Đếm ngược ngày thi Trung học phổ thông quốc gia">
+    <div class="window-controls">
+      <div class="window-button close"></div>
+      <div class="window-button minimize"></div>
+      <div class="window-button maximize"></div>
+    </div>
+    <div class="window-title">Countdown Timer</div>
+    <div class="content-area">
+      <h1>Đếm ngược đến ngày thi THPT Quốc gia</h1>
+      <div class="countdown" aria-live="polite" aria-atomic="true">
+        <div class="time-box" aria-label="Ngày còn lại">
+          <div class="number" id="days">0</div>
+          <div class="label">Ngày</div>
         </div>
-    </body>
+        <div class="time-box" aria-label="Giờ còn lại">
+          <div class="number" id="hours">0</div>
+          <div class="label">Giờ</div>
+        </div>
+        <div class="time-box" aria-label="Phút còn lại">
+          <div class="number" id="minutes">0</div>
+          <div class="label">Phút</div>
+        </div>
+        <div class="time-box" aria-label="Giây còn lại">
+          <div class="number" id="seconds">0</div>
+          <div class="label">Giây</div>
+        </div>
+      </div>
+    </div>
+  </div><!-- Anime.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script>
+    // Ngày thi THPT Quốc gia (ví dụ: 14/06/2025 07:00:00)
+    const examDate = new Date('2025-06-26T00:00:00');
+
+    // Lấy các phần tử hiển thị
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+
+    // Lưu giá trị cũ để so sánh thay đổi
+    let prev = {
+      days: null,
+      hours: null,
+      minutes: null,
+      seconds: null
+    };
+
+    // Hàm cập nhật số đếm ngược
+    function updateCountdown() {
+      const now = new Date();
+      let diff = examDate - now;
+
+      if (diff < 0) {
+        // Hết thởi gian
+        daysEl.textContent = '0';
+        hoursEl.textContent = '0';
+        minutesEl.textContent = '0';
+        secondsEl.textContent = '0';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      diff -= days * (1000 * 60 * 60 * 24);
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      diff -= hours * (1000 * 60 * 60);
+
+      const minutes = Math.floor(diff / (1000 * 60));
+      diff -= minutes * (1000 * 60);
+
+      const seconds = Math.floor(diff / 1000);
+
+      // Cập nhật và tạo hiệu ứng chỉ khi giá trị thay đổi
+      updateNumber(daysEl, days, 'days');
+      updateNumber(hoursEl, hours, 'hours');
+      updateNumber(minutesEl, minutes, 'minutes');
+      updateNumber(secondsEl, seconds, 'seconds');
+    }
+
+    // Hàm cập nhật số và thêm hiệu ứng
+    function updateNumber(element, value, key) {
+      if (prev[key] !== value) {
+        prev[key] = value;
+        // Anime.js hiệu ứng phóng to và thu nhỏ
+        anime({
+          targets: element,
+          scale: [
+            {value: 1.5, duration: 300, easing: 'easeOutExpo'},
+            {value: 1, duration: 600, easing: 'easeOutElastic(1, .5)'}
+          ],
+          color: [
+            {value: '#ffeb3b', duration: 300},
+            {value: '#ffffff', duration: 600}
+          ],
+          duration: 900
+        });
+
+        element.textContent = value;
+      }
+    }
+
+    // Khởi động cập nhật đếm ngược mỗi giây
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Hiệu ứng tiêu đề nhấp nháy nhẹ
+    anime({
+      targets: 'h1',
+      opacity: [0.6, 1],
+      duration: 2000,
+      easing: 'easeInOutSine',
+      direction: 'alternate',
+      loop: true
+    });
+
+    // Hiệu ứng nền gradient chuyển động nhẹ
+    anime({
+      targets: 'body',
+      backgroundPosition: ['0% 50%', '100% 50%'],
+      duration: 15000,
+      easing: 'linear',
+      direction: 'alternate',
+      loop: true
+    });
+  </script>
+
+  <div class="author">
+    Web dev <a href="https://github.com/trunghieu17102007" target="_blank">Trung Hieu 17102007</a>
+  </div>
+</body>
 </html>
